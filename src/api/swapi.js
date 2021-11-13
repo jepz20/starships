@@ -1,4 +1,4 @@
-export const BASE_URL = "http https://swapi.dev/api";
+export const BASE_URL = "https://swapi.dev/api";
 
 const endpoints = {
   starship: "/starships",
@@ -10,7 +10,7 @@ const doRequest = (url, method = "GET") => {
   }).then((res) => res.json());
 };
 
-export const getInitialStartships = () => {
+export const getInitialStarships = () => {
   const url = `${BASE_URL}${endpoints.starship}/?format=json`;
   return getStartships(url);
 };

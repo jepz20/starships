@@ -1,26 +1,24 @@
-import React from 'react';
-import logo from './logo.svg';
+import React from "react";
+import { Button } from "./components/Button";
+import { Main } from "./components/Main";
+import startshipIcon from "./imgs/starshipIcon.png";
 
-import './index.css';
-import './App.css';
+import "./index.css";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
+    <div className="bg-primary text-primary p-6 flex flex-col justify-center items-center">
+      <div className="flex flex-row justify-between w-full pb-16">
+        <a href="/">
+          <img className="h-8" src={startshipIcon} alt="go home icon" />
         </a>
-      </header>
+        <Button className="text-secondary">
+          <a href="/favorites" className="text-secondary">
+            View Favorites
+          </a>
+        </Button>
+      </div>
+      <Main />
     </div>
   );
 }
