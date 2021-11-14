@@ -1,6 +1,6 @@
 import React from "react";
-import { Button } from "./components/Button";
-import { Main } from "./components/Main";
+import { Button } from "./shared/components/Button";
+import { Main } from "./views/Main";
 import startshipIcon from "./imgs/starshipIcon.png";
 
 import "./index.css";
