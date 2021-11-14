@@ -3,14 +3,24 @@ import {
   createAsyncThunk,
   createSelector,
 } from "@reduxjs/toolkit";
-import { getInitialStarships } from "./api/swapi";
+import { getStartships } from "./api/swapi";
 
-const initialState = { ids: [], entities: {}, status: "idle" };
+const initialState = {
+  ids: [],
+  entities: {},
+  hasMore: false,
+  status: "idle",
+  favorites: {},
+  comments: {},
+};
 
 export const fetchStarships = createAsyncThunk(
   "starships/fetchStarships",
-  async () => {
-    const response = await getInitialStarships();
+  async (page) => {
+    const response = await getStartships(page);
+    if (!response.results) {
+      throw new Error("Error Getting Items");
+    }
     return response;
   }
 );
@@ -21,13 +31,15 @@ const starshipsSlice = createSlice({
   reducers: {
     starshipFavoriteToggle(state, action) {
       const { name } = action.payload;
-      const ship = state.entities[name];
-      ship.favorite = !ship.favorite;
+      if (!state.favorites[name]) {
+        state.favorites[name] = true;
+      } else {
+        delete state.favorites[name];
+      }
     },
-    starshipFavoriteComment(state, action) {
+    starshipEditComment(state, action) {
       const { name, comment } = action.payload;
-      const ship = state.entities[name];
-      ship.comment = comment;
+      state.comments[name] = comment;
     },
   },
   extraReducers: (builder) => {
@@ -43,10 +55,11 @@ const starshipsSlice = createSlice({
           if (!newEntities[starship.name]) {
             newIds.push(starship.name);
           }
-          newEntities[starship.name] = starship;
+          newEntities[starship.name] = { ...starship };
         });
         state.entities = newEntities;
         state.hasMore = !!next;
+        console.log(state.hasMore);
         state.ids = newIds;
         state.status = "idle";
       })
@@ -60,7 +73,7 @@ const starshipsSlice = createSlice({
 export const {
   addStarships,
   starshipFavoriteToggle,
-  starshipFavoriteComment,
+  starshipEditComment,
   starshipsLoading,
 } = starshipsSlice.actions;
 

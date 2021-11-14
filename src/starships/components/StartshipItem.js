@@ -7,17 +7,8 @@ import { Favorite } from "../../shared/components/Icons/Favorite";
 import { responsizes } from "../../shared/utils/constants";
 import { useWindowSize } from "../../shared/utils/useWindowsSize";
 import { useDispatch, useSelector } from "react-redux";
-import { starshipFavoriteToggle } from "../starshipsSlice";
-
-const Detail = ({ children, className }) => {
-  return <div className={`text-lg ${className}`}>{children}</div>;
-};
-
-const Title = ({ children, className }) => {
-  return (
-    <div className={`font-bold text-2xl pb-4 ${className}`}>{children}</div>
-  );
-};
+import { starshipEditComment, starshipFavoriteToggle } from "../starshipsSlice";
+import { Detail, Title } from "../../shared/components/Text";
 
 const Rating = ({ rating, className }) => {
   try {
@@ -40,7 +31,7 @@ const Rating = ({ rating, className }) => {
   }
 };
 
-export const StarshipImage = ({ name }) => {
+const StarshipImage = ({ name }) => {
   const windowSize = useWindowSize();
   return (
     <img
@@ -51,37 +42,65 @@ export const StarshipImage = ({ name }) => {
   );
 };
 
-export const Startship = ({ name }) => {
+const Comment = ({ comment, onChange }) => {
+  return (
+    <textarea
+      onChange={onChange}
+      value={comment}
+      placeholder="Notes"
+      className={`rounded-lg bg-secondary border border-grey p-2`}
+    />
+  );
+};
+
+export const Startship = ({ name, showComments }) => {
   const starship = useSelector((state) => state.starships.entities[name]);
+  const favorite = useSelector((state) => !!state.starships.favorites[name]);
+  const comment = useSelector((state) => state.starships.comments[name]);
   const dispatch = useDispatch();
   if (!starship) {
     return null;
   }
-
+  console.log(starship)
   return (
-    <div className="w-card-s md:w-card-m bg-card rounded-2xl p-6 flex flex-row gap-x-2 bg-secondary">
-      <div className="flex-1">
-        <Title>{starship.name}</Title>
-        <Detail className="pb-4 md:pb-2">{starship.manufacturer}</Detail>
-        <Rating className="pb-2" rating={starship.hyperdrive_rating} />
-        <Detail>Passengers: {starship.passengers}</Detail>
-      </div>
-      <div className="relative">
-        <button
-          onClick={() => {
-            dispatch(starshipFavoriteToggle({ name: starship.name }));
-          }}
-          className="flex justify-center items-center absolute bg-secondary w-11 h-11 rounded-full right-2 top-3"
-        >
-          <Favorite
-            className={`stroke-current stroke-3 text-secondary ${
-              starship.favorite ? "fill-current" : ""
-            }`}
-          />
-        </button>
+    <div className="w-card-s md:w-card-m bg-card rounded-2xl p-6 flex flex-col gap-4 bg-secondary">
+      <div className="flex flex-row gap-x-2 h-40">
+        <div className="flex-1">
+          <Title>{starship.name}</Title>
+          <Detail className="pb-4 md:pb-2">{starship.manufacturer}</Detail>
+          <Rating className="pb-2" rating={starship.hyperdrive_rating} />
+          <Detail>Passengers: {starship.passengers}</Detail>
+        </div>
+        <div className="relative">
+          <button
+            onClick={() => {
+              dispatch(starshipFavoriteToggle({ name: starship.name }));
+            }}
+            className="flex justify-center items-center absolute bg-secondary w-11 h-11 rounded-full right-2 top-3"
+          >
+            <Favorite
+              className={`stroke-current stroke-3 text-secondary ${
+                favorite ? "fill-current" : ""
+              }`}
+            />
+          </button>
 
-        <StarshipImage name={starship.name} />
+          <StarshipImage name={starship.name} />
+        </div>
       </div>
+      {showComments && (
+        <Comment
+          comment={comment}
+          onChange={(e) => {
+            dispatch(
+              starshipEditComment({
+                name: starship.name,
+                comment: e.target.value,
+              })
+            );
+          }}
+        />
+      )}
     </div>
   );
 };

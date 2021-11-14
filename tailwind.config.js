@@ -12,6 +12,10 @@ module.exports = {
       secondary: "#FF6871",
       grey: "rgba(255, 255, 255, 0.5)",
     },
+    borderColor: (theme) => ({
+      ...theme("colors"),
+      grey: "#D9D9D9",
+    }),
     extend: {
       strokeWidth: {
         3: "3",
@@ -30,7 +34,9 @@ module.exports = {
     },
   },
   variants: {
-    extend: {},
+    extend: {
+      textOpacity: ["hover"],
+    },
   },
   plugins: [],
 };

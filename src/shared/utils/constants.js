@@ -5,3 +5,5 @@ export const responsizes = {
   xl: 1280,
   "2xl": 1560,
 };
+
+export const itemsPerPage = 10;

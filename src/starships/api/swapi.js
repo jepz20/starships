@@ -10,15 +10,7 @@ const doRequest = (url, method = "GET") => {
   }).then((res) => res.json());
 };
 
-export const getInitialStarships = () => {
-  const url = `${BASE_URL}${endpoints.starship}/?format=json`;
-  return getStartships(url);
-};
-
-export const getStartships = (url) => {
-  if (!url.startsWith(BASE_URL)) {
-    return Promise.reject(new Error("getStartships: invalid url"));
-  }
-
+export const getStartships = (page=1) => {
+  const url = `${BASE_URL}${endpoints.starship}/?format=json&page=${page}`;
   return doRequest(url);
 };
