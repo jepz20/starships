@@ -61,7 +61,6 @@ export const Startship = ({ name, showComments }) => {
   if (!starship) {
     return null;
   }
-  console.log(starship)
   return (
     <div className="w-card-s md:w-card-m bg-card rounded-2xl p-6 flex flex-col gap-4 bg-secondary">
       <div className="flex flex-row gap-x-2 h-40">
