@@ -3,10 +3,12 @@
 Find the best starships for your intergalactic adventures!
 
 Key Features:
+
 1. Responsive Design
 2. Fast! Lazy load starships so you almost never see a loader!
 3. Persistance! Locally store your favorites, so you never miss your favorite spaceships
 4. Fully Tested! Have confidence you can always find your starships needs with a well tested application
+
 ### Demo
 
 https://starships.jepz.me/
@@ -14,6 +16,7 @@ https://starships.jepz.me/
 ## Getting Started
 
 ### Github reposity
+
 repository is currently private, please request access if needed
 https://github.com/jepz20/starships
 
@@ -52,12 +55,13 @@ yarn test -- --coverage
 
 ## Stack
 
-| Type             | Library                                           |
-| ---------------- | ------------------------------------------------- |
-| UI Library       | [React](https://reactjs.org/)                     |
-| State Management | [Redux](https://redux-toolkit.js.org/)            |
-| Styling          | [Tailwind](https://tailwindcss.com/)              |
-| Test             | [Jest](https://jestjs.io/)                        |
-| Routing          | [React Router](https://reactrouter.com/)          |
-| Analytics        | [Google Analytics](https://analytics.google.com/) |
-| CI/CD            | [Netlify](https://netlify.com) |
+| Type             | Library                                                                                                     |
+| ---------------- | ----------------------------------------------------------------------------------------------------------- |
+| UI Library       | [React](https://reactjs.org/)                                                                               |
+| State Management | [Redux](https://redux-toolkit.js.org/)                                                                      |
+| Persistance      | [Redux Persist](https://github.com/rt2zz/redux-persist)                                                     |
+| Styling          | [Tailwind](https://tailwindcss.com/)                                                                        |
+| Test             | [Jest](https://jestjs.io/),[Testing Library](https://testing-library.com/docs/react-testing-library/intro/) |
+| Routing          | [React Router](https://reactrouter.com/)                                                                    |
+| Analytics        | [Google Analytics](https://analytics.google.com/)                                                           |
+| CI/CD            | [Netlify](https://netlify.com)                                                                              |
