@@ -13,13 +13,12 @@ Key Features:
 
 https://starships.jepz.me/
 
-## Getting Started
 
-### Github reposity
+## Github reposity
 
-repository is currently private, please request access if needed
 https://github.com/jepz20/starships
 
+## Getting Started
 ### Prerequesite
 
 To run this project locally you would need to have install:
@@ -52,6 +51,10 @@ run tests with coverage
 ```
 yarn test -- --coverage
 ```
+
+## Deployment
+
+Application is setup with netlify to be auto deploy when code is commited to the master branch.
 
 ## Stack
 
