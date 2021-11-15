@@ -39,11 +39,11 @@ yarn test -- --coverage
 
 ## Stack
 
-| Type            | Library                                      |
-| --------------- | -------------------------------------------- |
-| UI Library      | [React](https://reactjs.org/)                |
-| tate Management | [Redux](https://redux-toolkit.js.org/)       |
-| Styling         | [Tailwind](https://tailwindcss.com/)         |
-| Test            | [Jest](https://jestjs.io/)                   |
-| Routing         | [React Router](https://reactrouter.com/)     |
-| Analytics       | [Google Analytics](https://analytics.google.com/) |
+| Type             | Library                                           |
+| ---------------- | ------------------------------------------------- |
+| UI Library       | [React](https://reactjs.org/)                     |
+| State Management | [Redux](https://redux-toolkit.js.org/)            |
+| Styling          | [Tailwind](https://tailwindcss.com/)              |
+| Test             | [Jest](https://jestjs.io/)                        |
+| Routing          | [React Router](https://reactrouter.com/)          |
+| Analytics        | [Google Analytics](https://analytics.google.com/) |
