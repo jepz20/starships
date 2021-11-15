@@ -7,10 +7,12 @@ const endpoints = {
 const doRequest = (url, method = "GET") => {
   return fetch(url, {
     method,
-  }).then((res) => res.json());
+  }).then((res) => {
+    return res.json();
+  });
 };
 
-export const getStartships = (page=1) => {
+export const getStartships = (page = 1) => {
   const url = `${BASE_URL}${endpoints.starship}/?format=json&page=${page}`;
   return doRequest(url);
 };

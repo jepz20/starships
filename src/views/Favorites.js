@@ -8,16 +8,11 @@ export const Favorites = () => {
   const starships = useSelector((state) =>
     Object.keys(state.starships.favorites).map((name) => name)
   );
-  const error = "";
 
-  if (error) {
-    return <div>Error loading ships</div>;
-  }
-
-  return (
-    <div className="flex flex-col px-4 md:px-8">
-      <Header>Favorites</Header>
-      {starships.length === 0 ? (
+  let Component;
+  switch (true) {
+    case starships.length === 0:
+      Component = (
         <div>
           <Title>No Favorites Yet!</Title>
           <Detail>
@@ -27,9 +22,16 @@ export const Favorites = () => {
             to add them here!
           </Detail>
         </div>
-      ) : (
-        <StartshipList starships={starships} showComments={true} />
-      )}
+      );
+      break;
+    default:
+      Component = <StartshipList starships={starships} showComments={true} />;
+  }
+
+  return (
+    <div className="flex flex-col px-4 md:px-8">
+      <Header>Favorites</Header>
+      {Component}
     </div>
   );
 };

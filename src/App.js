@@ -6,13 +6,14 @@ import startshipIcon from "./imgs/starshipIcon.png";
 
 import "./index.css";
 import { Routes, Route, Link, useLocation } from "react-router-dom";
+import { ErrorBoundary } from "./shared/components/ErrorBoundary";
 
 function App() {
   const location = useLocation();
   return (
     <div className="bg-primary text-primary p-6 flex flex-col justify-center items-center">
       <div className="flex flex-row justify-between w-full pb-16">
-        <Link to="/">
+        <Link to="/" data-testid="gohome-link">
           <img className="h-8" src={startshipIcon} alt="go home icon" />
         </Link>
         {location.pathname !== "/favorites" && (
@@ -21,10 +22,12 @@ function App() {
           </Link>
         )}
       </div>
-      <Routes>
-        <Route path="/" element={<Main />} />
-        <Route path="favorites" element={<Favorites />} />
-      </Routes>
+      <ErrorBoundary>
+        <Routes>
+          <Route path="/" element={<Main />} />
+          <Route path="favorites" element={<Favorites />} />
+        </Routes>
+      </ErrorBoundary>
     </div>
   );
 }

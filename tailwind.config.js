@@ -21,7 +21,8 @@ module.exports = {
         3: "3",
       },
       width: {
-        "card-m": "596px",
+        "card-xl": "596px",
+        "card-m": "450px",
         "card-s": "347px",
         "card-image-m": "200px",
         "card-image-s": "120px",
@@ -30,6 +31,10 @@ module.exports = {
         "card-m": "338px",
         "card-s": "200px",
         "card-image-s": "180px",
+      },
+      maxWidth: {
+        "card-m": "596px",
+        "card-s": "347px",
       },
     },
   },

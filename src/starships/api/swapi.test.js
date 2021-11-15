@@ -1,4 +1,4 @@
-import { getInitialStartships, getStartships, BASE_URL } from "./swapi";
+import { getStartships } from "./swapi";
 
 const response = {
   count: 1,
@@ -31,27 +31,15 @@ const response = {
     },
   ],
 };
-describe("starships API", () => {
-  beforeEach(() => {
-    fetch.resetMocks();
-  });
-  afterAll(() => {
-    fetch.resetMocks();
-  });
+beforeEach(() => {
+  fetch.resetMocks();
+});
+afterAll(() => {
+  fetch.resetMocks();
+});
 
-  it("should get the initialStarships", async () => {
-    fetch.mockResponseOnce(JSON.stringify(response));
-    const data = await getInitialStartships();
-    expect(data).toEqual(response);
-  });
-
-  it("should failed if the url is not valid", async () => {
-    await expect(getStartships("www.test.com")).rejects.toThrow();
-  });
-
-  it("should get startships with an url", async () => {
-    fetch.mockResponseOnce(JSON.stringify(response));
-    const data = await getStartships(BASE_URL);
-    await expect(data).toEqual(response);
-  });
+test("should get startships with an url", async () => {
+  fetch.mockResponseOnce(JSON.stringify(response));
+  const data = await getStartships(2);
+  await expect(data).toEqual(response);
 });

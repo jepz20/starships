@@ -3,6 +3,7 @@ import { combineReducers } from "redux";
 import {
   persistStore,
   persistReducer,
+  createTransform,
   FLUSH,
   REHYDRATE,
   PAUSE,
@@ -12,16 +13,32 @@ import {
 } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 
-import startshipReducer from "./starships/starshipsSlice";
+import starshipReducer from "./starships/starshipsSlice";
 
+const transform = createTransform(
+  (inboundState, key) => {
+    return {
+      ...inboundState,
+      error: null,
+      status: "idle",
+    };
+  },
+  (outboundState, key) => {
+    return {
+      ...outboundState,
+    };
+  },
+  { whitelist: "starships" }
+);
 const rootReducer = combineReducers({
-  starships: startshipReducer,
+  starships: starshipReducer,
 });
 
 const persistConfig = {
   key: "root",
   version: 1,
   storage,
+  transforms: [transform],
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

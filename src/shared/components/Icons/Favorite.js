@@ -1,8 +1,9 @@
 import React from "react";
-export const Favorite = ({ className }) => {
+export const Favorite = ({ className, id }) => {
   return (
     <svg
       className={className}
+      data-testid={`favorite-icon-${id}`}
       width="26"
       height="23"
       viewBox="0 0 26 23"

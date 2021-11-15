@@ -5,7 +5,7 @@ import {
 } from "@reduxjs/toolkit";
 import { getStartships } from "./api/swapi";
 
-const initialState = {
+export const initialState = {
   ids: [],
   entities: {},
   hasMore: false,
@@ -19,7 +19,7 @@ export const fetchStarships = createAsyncThunk(
   async (page) => {
     const response = await getStartships(page);
     if (!response.results) {
-      throw new Error("Error Getting Items");
+      return { results: [] };
     }
     return response;
   }
@@ -59,23 +59,19 @@ const starshipsSlice = createSlice({
         });
         state.entities = newEntities;
         state.hasMore = !!next;
-        console.log(state.hasMore);
         state.ids = newIds;
         state.status = "idle";
       })
       .addCase(fetchStarships.rejected, (state, action) => {
+        const { message } = action.error || {};
         state.status = "error";
-        state.error = action.payload;
+        state.error = message;
       });
   },
 });
 
-export const {
-  addStarships,
-  starshipFavoriteToggle,
-  starshipEditComment,
-  starshipsLoading,
-} = starshipsSlice.actions;
+export const { starshipFavoriteToggle, starshipEditComment } =
+  starshipsSlice.actions;
 
 export default starshipsSlice.reducer;
 

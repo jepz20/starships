@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import { PrimaryButton } from "../shared/components/Button";
-import { Header } from "../shared/components/Text";
+import { Header, Title } from "../shared/components/Text";
 import { Spinner } from "../shared/components/Spinner";
 import { itemsPerPage } from "../shared/utils/constants";
 import { StartshipList } from "../starships/components/StarshipList";
@@ -16,9 +16,12 @@ const getNextPage = (starships) => {
   return Math.ceil(starships.length / itemsPerPage + 1);
 };
 
-const areItemsinStore = (itemStart, starships) => {
+const areNextItemsinStore = (itemStart, starships) => {
   const nextStart = getNextItemStart(itemStart);
-  return nextStart < starships.length;
+  return areItemsinStore(nextStart, starships);
+};
+const areItemsinStore = (itemStart, starships) => {
+  return itemStart < starships.length;
 };
 
 const handleNextPage = (
@@ -28,10 +31,7 @@ const handleNextPage = (
   itemStart,
   updateItemStart
 ) => {
-  const itemsNotInStore = !areItemsinStore(itemStart, starships);
-  if (!hasMore && itemsNotInStore) {
-    return;
-  }
+  const itemsNotInStore = !areNextItemsinStore(itemStart, starships);
   if (hasMore && itemsNotInStore) {
     const nextPage = getNextPage(starships);
     dispatch(fetchStarships(nextPage));
@@ -40,9 +40,6 @@ const handleNextPage = (
 };
 
 const handlePreviousPage = (itemStart, updateItemStart) => {
-  if (itemStart === 0) {
-    return;
-  }
   updateItemStart(itemStart - itemsPerPage);
 };
 
@@ -58,58 +55,71 @@ export const Main = () => {
 
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(fetchStarships());
-  }, [dispatch]);
+    if (starships.length === 0) {
+      dispatch(fetchStarships());
+    }
+  }, [dispatch, starships]);
 
   useEffect(() => {
-    window.scrollTo(0, 0);
+    window && window.scrollTo(0, 0);
 
     // lazy load the next items
     if (
       status !== "loading" &&
       hasMore &&
-      !areItemsinStore(itemStart, starships)
+      !areNextItemsinStore(itemStart, starships) &&
+      !error
     ) {
       dispatch(fetchStarships(getNextPage(starships)));
     }
-  }, [itemStart, status, hasMore, dispatch, starships]);
+  }, [itemStart, status, hasMore, dispatch, starships, error]);
 
-  if (error) {
-    return <div>Error loading ships</div>;
+  let Component;
+  switch (true) {
+    case status === "error":
+      Component = <Title> ⚠️ Error loading ships {error}</Title>;
+      break;
+    case status === "loading" && !areItemsinStore(itemStart, starships):
+      Component = <Spinner id="main" />;
+      break;
+    default:
+      Component = (
+        <div>
+          <StartshipList
+            starships={starships.slice(itemStart, itemStart + itemsPerPage)}
+          />
+          <div className="flex flex-row gap-2 py-11 justify-center items-center bottom-6">
+            <PrimaryButton
+              disabled={itemStart === 0}
+              onClick={() => handlePreviousPage(itemStart, updateItemStart)}
+            >
+              Previous Page
+            </PrimaryButton>
+            <PrimaryButton
+              disabled={!hasMore && !areNextItemsinStore(itemStart, starships)}
+              onClick={() =>
+                handleNextPage(
+                  dispatch,
+                  starships,
+                  hasMore,
+                  itemStart,
+                  updateItemStart
+                )
+              }
+            >
+              Next Page
+            </PrimaryButton>
+          </div>
+        </div>
+      );
   }
-
-  if (status === "loading" && itemStart >= starships.length) {
-    return <Spinner />;
+  if (error) {
   }
 
   return (
     <div className="flex flex-col px-4 md:px-8">
       <Header>Starship List</Header>
-      <StartshipList
-        starships={starships.slice(itemStart, itemStart + itemsPerPage)}
-      />
-      <div className="flex flex-row gap-2 py-11 justify-center items-center">
-        <PrimaryButton
-          disabled={itemStart === 0}
-          onClick={() => handlePreviousPage(itemStart, updateItemStart)}
-        >
-          Previous Page
-        </PrimaryButton>
-        <PrimaryButton
-          disabled={!hasMore && !areItemsinStore(itemStart, starships)}
-          onClick={() =>
-            handleNextPage(
-              dispatch,
-              starships,
-              hasMore,
-              itemStart,
-              updateItemStart
-            )
-          }
-        >
-          Next Page
-        </PrimaryButton>
-      </div>
+      {Component}
     </div>
   );
 };

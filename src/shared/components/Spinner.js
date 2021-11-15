@@ -1,6 +1,7 @@
-export const Spinner = () => {
+export const Spinner = ({ id }) => {
   return (
     <svg
+      data-testid={`loading-spinner-${id}`}
       style={{
         margin: "auto",
         display: "block",
