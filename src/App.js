@@ -11,7 +11,7 @@ import { ErrorBoundary } from "./shared/components/ErrorBoundary";
 function App() {
   const location = useLocation();
   return (
-    <div className="bg-primary text-primary p-6 flex flex-col justify-center items-center">
+    <div className="bg-primary text-primary p-6 flex flex-col">
       <div className="flex flex-row justify-between w-full pb-16">
         <Link to="/" data-testid="gohome-link">
           <img className="h-8" src={startshipIcon} alt="go home icon" />

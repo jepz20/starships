@@ -29,7 +29,7 @@ export const Favorites = () => {
   }
 
   return (
-    <div className="flex flex-col px-4 md:px-8">
+    <div className="flex flex-col px-4 md:px-8 justify-start items-start">
       <Header>Favorites</Header>
       {Component}
     </div>

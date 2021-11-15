@@ -2,7 +2,15 @@
 
 Find the best starships for your intergalactic adventures!
 
+### Demo
+
+starships.jepz.me
+
 ## Getting Started
+
+### Github reposity
+repository is currently private, please request access if needed
+https://github.com/jepz20/starships
 
 ### Prerequesite
 
@@ -47,3 +55,4 @@ yarn test -- --coverage
 | Test             | [Jest](https://jestjs.io/)                        |
 | Routing          | [React Router](https://reactrouter.com/)          |
 | Analytics        | [Google Analytics](https://analytics.google.com/) |
+| CI/CD            | [Netlify](https://netlify.com) |
