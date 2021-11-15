@@ -2,9 +2,14 @@
 
 Find the best starships for your intergalactic adventures!
 
+Key Features:
+1. Responsive Design
+2. Fast! Lazy load starships so you almost never see a loader!
+3. Persistance! Locally store your favorites, so you never miss your favorite spaceships
+4. Fully Tested! Have confidence you can always find your starships needs with a well tested application
 ### Demo
 
-starships.jepz.me
+https://starships.jepz.me/
 
 ## Getting Started
 
